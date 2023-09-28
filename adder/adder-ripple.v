@@ -26,11 +26,10 @@ assign caout = (b1 & b2)|(cain & (b1 ^ b2));
 
 endmodule
 
-module rca(
-	input  [31:0] op1,
-	input  [31:0] op2,
-	output [31:0] sum,
-	output carry
+module Add(
+	input  [31:0] a,
+	input  [31:0] b,
+	output [31:0] sum
 );
 
 wire [32:0] tmpcarry;
@@ -38,17 +37,16 @@ assign tmpcarry[0] = 'd0;
 
 genvar i;
 generate
-	for(i = 0;i<16;i = i+1) begin
+	for(i = 0;i<32;i = i+1) begin
 	  full_adder adderi(
-		.b1		(op1[i]),
-		.b2		(op2[i]),
+		.b1		(a[i]),
+		.b2		(b[i]),
 		.cain	(tmpcarry[i]),
 		.caout	(tmpcarry[i+1]),
 		.sum	(sum[i])
 	  );
 	end
 endgenerate
-	assign carry = tmpcarry[32];
 
 
 	// TODO: Implement this module here

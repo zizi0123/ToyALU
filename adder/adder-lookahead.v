@@ -63,10 +63,11 @@ endmodule
 module Add(
 	input  [31:0] a,
 	input  [31:0] b,
-	output [31:0] sum
+	output reg[31:0] sum
 );
 
 wire [32:0] carrys;
+wire [31:0] s;
 assign carrys[0] = 0;
 
 genvar i;
@@ -76,13 +77,15 @@ generate
 			.a1		(a[i+3:i]),
 			.b1 	(b[i+3:i]),
 			.cain 	(carrys[i]),
-			.sum 	(sum[i+3:i]),
+			.sum 	(s[i+3:i]),
 			.caout 	(carrys[i+4])
 		);
 	end
 	
 endgenerate
-
+always @(*) begin
+		sum = s;
+end
 
 
 	// TODO: Implement this module here
